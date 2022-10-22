@@ -1,0 +1,7 @@
+{
+  "name": "Deal-Navigation-Menu",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
