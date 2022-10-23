@@ -1,0 +1,19 @@
+<div class="contain overflow-hidden" *ngIf="toasterContent"
+    [ngClass]="{'success': !toasterContent?.isError, 'error':toasterContent?.isError}" (mousemove)="extendToasterTime()"
+    (mouseleave)="closeToasterAfterMouseMove()">
+    <div class="position-relative w-100 overflow-hidden px-3" [class.active-animation]="isMouseEntered">
+        <div class="py-3">
+            <div class="position-absolute cursor-pointer" (click)="closeToaster()">
+                <i class="fa-regular fa-circle-xmark fs-5"
+                    [ngClass]="{'success-notification': !toasterContent?.isError,'text-danger':toasterContent?.isError}"></i>
+            </div>
+        </div>
+        <div>
+            <strong class="text-start text-white mb-2" *ngIf="toasterContent?.title">{{toasterContent?.title
+                }}</strong>
+            <p class="text-white pb-1 d-flex align-items-center" [class.pb-3]="toasterContent?.title"
+                *ngIf="toasterContent?.message" style="white-space: normal;">
+                {{toasterContent?.message}}</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="bottom-appbar position-fixed bottom-0 start-0 end-0">
+    <div class="tabs d-flex h-100">
+        <div class="tab d-flex justify-content-center align-items-center h-100 bg-white is-active tab-start d-flex">
+            <div class="bg-white w-100 h-100 d-flex justify-content-center align-items-center bg-transparent">
+                <div class="d-flex flex-column align-items-center">
+                    <ion-icon name="albums-outline"></ion-icon>
+                    <p class="mb-0">الاعلانات</p>
+                </div>
+            </div>
+            <div class="bg-white w-100 h-100 d-flex justify-content-center align-items-center bg-transparent">
+                <div class=" notification position-relative" [class.notification]="isThereNotification">
+                    <div class="d-flex flex-column align-items-center">
+                        <ion-icon name="chatbox-outline"></ion-icon>
+                        <p class="mb-0">المحادثات</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="tab d-flex justify-content-center align-items-center h-100 tab--fab border-0 d-flex bg-transparent h-100 bg-white h-100">
+            <div class="top w-100 h-50 bg-transparent">
+                <div
+                    class="fab bg-warning rounded-circle d-flex justify-content-center align-items-center text-white fw-bold">
+                    <ion-icon name="add-outline" class="h1 fw-bold"></ion-icon>
+                </div>
+            </div>
+        </div>
+        <div class="tab d-flex justify-content-center align-items-center h-100 bg-white tab-end">
+            <div class="bg-white w-100 h-100 d-flex justify-content-center align-items-center bg-transparent">
+                <div class="d-flex flex-column align-items-center">
+                    <ion-icon name="bag-add-outline"></ion-icon>
+                    <p class="mb-0">طلباتي</p>
+                </div>
+            </div>
+            <div class="bg-white w-100 h-100 d-flex justify-content-center align-items-center bg-transparent">
+                <div class="d-flex flex-column align-items-center">
+                    <ion-icon name="home-outline"></ion-icon>
+                    <p class="mb-0">الرئيسية</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
