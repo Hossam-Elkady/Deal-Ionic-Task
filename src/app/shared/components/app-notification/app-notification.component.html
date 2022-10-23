@@ -1,11 +1,11 @@
-<div class="contain overflow-hidden" *ngIf="toasterContent"
-    [ngClass]="{'success': !toasterContent?.isError, 'error':toasterContent?.isError}" (mousemove)="extendToasterTime()"
-    (mouseleave)="closeToasterAfterMouseMove()">
-    <div class="position-relative w-100 overflow-hidden px-3" [class.active-animation]="isMouseEntered">
+<div class="contain overflow-hidden" *ngIf="toasterContent$ | async as toasterContent"
+    [ngClass]="{'success': !toasterContent?.isError, 'error':toasterContent?.isError}">
+    <div class="position-relative w-100 overflow-hidden px-3 active-animation">
         <div class="py-3">
             <div class="position-absolute cursor-pointer" (click)="closeToaster()">
-                <i class="fa-regular fa-circle-xmark fs-5"
-                    [ngClass]="{'success-notification': !toasterContent?.isError,'text-danger':toasterContent?.isError}"></i>
+                <ion-icon name="close-circle-outline" class="fs-5"
+                    [ngClass]="{'success-notification': !toasterContent?.isError,'text-danger':toasterContent?.isError}">
+                </ion-icon>
             </div>
         </div>
         <div>

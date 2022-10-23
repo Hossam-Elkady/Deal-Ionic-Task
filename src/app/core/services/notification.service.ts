@@ -7,7 +7,7 @@ import { NotificationClass } from '../models/notificationClass.class';
 })
 export class NotificationService {
 
-    toasterContent$: Subject<{}> = new Subject();
+    toasterContent$: Subject<NotificationClass> = new Subject();
     timerSubscription: Subscription
 
     constructor() { }

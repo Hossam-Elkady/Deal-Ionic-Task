@@ -1,5 +1,5 @@
-import { timer, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { timer, Subscription, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationClass } from 'src/app/core/models/notificationClass.class';
 
@@ -8,45 +8,18 @@ import { NotificationClass } from 'src/app/core/models/notificationClass.class';
     templateUrl: './app-notification.component.html',
     styleUrls: ['./app-notification.component.css']
 })
-export class AppNotificationComponent implements OnInit, OnDestroy {
+export class AppNotificationComponent implements OnInit {
 
-    toasterContent: NotificationClass;
-    toasterSubscription: Subscription;
-    isMouseEntered: boolean = true;
-    timerSubscription: Subscription
+    toasterContent$: Observable<NotificationClass>;
 
     constructor(private notificationService: NotificationService) { }
 
-    ngOnDestroy(): void {
-        this.toasterSubscription?.unsubscribe()
-    }
-
     ngOnInit(): void {
-        this.toasterSubscription = this.notificationService.getToastContent().subscribe((res: NotificationClass) => {
-            this.toasterContent = res            
-        })
-    }
-
-    extendToasterTime() {
-        this.isMouseEntered = false
-        this.notificationService.toastNotification(this.toasterContent)
-        this.toasterSubscription?.unsubscribe()
-        this.timerSubscription && this.timerSubscription?.unsubscribe();
+        this.toasterContent$ = this.notificationService.getToastContent()
     }
 
     closeToaster() {
-        this.toasterContent = null;
-        this.isMouseEntered = true
         this.notificationService.closeToaster()
-        this.ngOnInit()
-    }
-
-    closeToasterAfterMouseMove() {
-        this.isMouseEntered = true
-        this.timerSubscription = timer(3000).subscribe(() => {
-            this.toasterContent = null
-            this.ngOnInit()
-        })
     }
 }
 
