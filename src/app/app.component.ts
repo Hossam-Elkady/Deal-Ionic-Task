@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { interval, Subscription, timer } from 'rxjs';
 import { NotificationClass } from './core/models/notificationClass.class';
 import { NotificationService } from './core/services/notification.service';
@@ -12,14 +13,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
     subscription: Subscription[] = []
 
-    constructor(private notificationService: NotificationService) { }
+    constructor(
+        private notificationService: NotificationService,
+        private router: Router
+    ) { }
 
     ngOnDestroy(): void {
         this.subscription.forEach(sub => sub?.unsubscribe())
     }
 
     ngOnInit(): void {
-        this.subscription.push(timer(3000).subscribe(() => this.sendNotification()))
+        this.subscription.push(timer(3000).subscribe(() => this.router.url !== '/home/chats' && this.sendNotification()))
     }
 
     sendNotification() {

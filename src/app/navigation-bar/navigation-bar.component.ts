@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../core/services/notification.service';
 
@@ -10,9 +11,11 @@ import { NotificationService } from '../core/services/notification.service';
 export class NavigationBarComponent implements OnInit {
 
     isThereNotification: boolean = false;
+    label: string = 'announcemets';
 
     constructor(
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -20,12 +23,19 @@ export class NavigationBarComponent implements OnInit {
     }
 
     checkNotifications() {
-        let sub: Subscription = this.notificationService.getToastContent().subscribe((res) => {
+        this.notificationService.getToastContent().subscribe((res) => {
+            console.log(res);
             if (res) {
                 this.isThereNotification = true;
-                sub.unsubscribe()
             }
         })
     }
 
+    onButtonClick(): void {
+        console.log('clicked')
+    }
+
+    navigate() {
+        this.router.navigate(['/home/main'])
+    }
 }

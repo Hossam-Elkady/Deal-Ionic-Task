@@ -1,0 +1,9 @@
+<ion-content>
+  <div class="main py-4 px-3">
+    <div *ngFor="let item of [1,2,3,4];first as first"
+      class="box-shadow py-3 border border-warning rounded-3 w-100 bg-white my-3 d-flex justify-content-center align-items-center" [class.my-3]="!first"
+      style="min-height: 25vh;">
+      <h1 class="text-center text-dark">Some Content Here</h1>
+    </div>
+  </div>
+</ion-content>
