@@ -24,7 +24,6 @@ export class NavigationBarComponent implements OnInit {
 
     checkNotifications() {
         this.notificationService.getToastContent().subscribe((res) => {
-            console.log(res);
             if (res) {
                 this.isThereNotification = true;
             }
