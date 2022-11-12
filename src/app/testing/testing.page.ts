@@ -3,6 +3,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { GestureController } from '@ionic/angular';
 import { RecordingData, VoiceRecorder } from 'capacitor-voice-recorder';
+import WaveSurfer from 'wavesurfer.js';
 
 @Component({
     selector: 'app-testing',
@@ -16,6 +17,9 @@ export class TestingPage implements OnInit, AfterViewInit {
     durationToDisplay: string = ''
     durationRecord: number = 0
     @ViewChild('recordButton', { read: ElementRef }) recordButton: ElementRef
+    waves: any[] = []
+    recordPlayingIndex: number | undefined = undefined;
+    lastRecordIndex: number | undefined = undefined;
 
     constructor(private gestureCtrl: GestureController) { }
 
@@ -34,6 +38,8 @@ export class TestingPage implements OnInit, AfterViewInit {
                 this.stopRecording()
             },
         }, true)
+        this.stopRecording()
+
         longPress.enable()
     }
 
@@ -89,15 +95,35 @@ export class TestingPage implements OnInit, AfterViewInit {
         })
     }
 
-    async playRecord(record: any) {
+    async playRecord(record: any, index: number, target) {
+        if (this.lastRecordIndex == index) {
+            this.waves.forEach(wave => wave.playPause())
+            return
+        }
+        this.lastRecordIndex = index
         const audioFile = await Filesystem.readFile({
             path: record.name,
             directory: Directory.Data
         })
         const recordBase64 = audioFile.data;
-        const audioRef = new Audio(`data:audio/wav;base64,${recordBase64}`)
-        audioRef.oncanplaythrough = () => audioRef.play()
-        audioRef.load()
+        this.bindWaveForm(recordBase64, index)
+    }
+
+    bindWaveForm(recordBase64, index) {
+        this.recordPlayingIndex = index
+        const wave = document.querySelector('wave')
+        wave?.remove()
+
+        this.waves.map(wave => wave.stop())
+        var wavesurfer = WaveSurfer.create({
+            container: `#record${index}`,
+            waveColor: 'green',
+            progressColor: '#1aafff',
+            height: 64
+        });
+        this.waves.push(wavesurfer)
+        wavesurfer.on('ready', () => wavesurfer.play());
+        wavesurfer.load(`data:audio/wav;base64,${recordBase64}`);
     }
 
     async deleteRecord(record: any) {
@@ -105,6 +131,7 @@ export class TestingPage implements OnInit, AfterViewInit {
             directory: Directory.Data,
             path: record.name
         })
+        this.stopRecording()
         this.loadFiles()
     }
 

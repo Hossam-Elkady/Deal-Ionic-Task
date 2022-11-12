@@ -14,11 +14,18 @@
         </ion-button>
     </div>
     <ion-list class="ion-no-padding">
-        <ion-item button (click)="playRecord(record)" *ngFor="let record of storedFileNames" detail="false"
-            style="--ion-background-color: #e9ebee"> {{record.name}}
-            <ion-icon name="trash-outline" color="danger" slot="end" (click)="deleteRecord(record);$event.stopPropagation()">
-            </ion-icon>
-        </ion-item>
+        <div [id]="'record'+index" *ngFor="let record of storedFileNames;index as index">
+            <ion-item button  detail="false" (click)="playRecord(record,index,$event.target)">
+                {{record.name}}
+                <!-- <ion-icon slot="end" (click)="playRecord(record,index,$event.target)"
+                    [name]="recordPlayingIndex != index ?'play-outline':'pause-outline'">
+                </ion-icon> -->
+                <ion-icon name="trash-outline" color="danger" slot="end"
+                    (click)="deleteRecord(record);$event.stopPropagation()">
+                </ion-icon>
+            </ion-item>
+        </div>
+
     </ion-list>
 
 
